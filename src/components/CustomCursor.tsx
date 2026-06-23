@@ -103,7 +103,7 @@ export default function CustomCursor({ activeTheme }: CustomCursorProps) {
     <>
       {/* Inner precise dot */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-50 mix-blend-difference"
+        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[9999] mix-blend-difference"
         style={{
           x: mouseX,
           y: mouseY,
@@ -119,7 +119,7 @@ export default function CustomCursor({ activeTheme }: CustomCursorProps) {
 
       {/* Lagging spring ring */}
       <motion.div
-        className="fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-50 border-2"
+        className="fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-[9999] border-2"
         style={{
           x: ringX,
           y: ringY,
