@@ -174,7 +174,7 @@ export default function Login({ onLoginSuccess }: LoginProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-[360px]">
         {/* Logo/Title */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">Portfolio</h1>
@@ -369,7 +369,7 @@ export default function Login({ onLoginSuccess }: LoginProps) {
                 </button>
               </form>
 
-              <div className="mt-6 space-y-2 text-center">
+              <div className="mt-6 text-center">
                 {isLogin && (
                   <button
                     onClick={() => setIsForgotPassword(true)}
@@ -378,17 +378,6 @@ export default function Login({ onLoginSuccess }: LoginProps) {
                     Forgot Password?
                   </button>
                 )}
-
-                <button
-                  onClick={() => {
-                    setIsLogin(!isLogin);
-                    setError('');
-                    setFormData({ email: '', password: '', name: '', confirmPassword: '' });
-                  }}
-                  className="text-gray-400 hover:text-gray-300 text-sm"
-                >
-                  {isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Sign In'}
-                </button>
               </div>
             </div>
           )}
