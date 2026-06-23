@@ -149,7 +149,7 @@ You can ask me questions about his:
   };
 
   return (
-    <div id="chat-ai-module" className="fixed bottom-6 right-6 z-40 font-sans">
+    <div id="chat-ai-module" className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 font-sans">
       
       {/* Floating Toggle Button */}
       {!isOpen && (
@@ -184,7 +184,7 @@ You can ask me questions about his:
       {isOpen && (
         <div 
           id="chat-floating-panel"
-          className={`w-[330px] sm:w-[380px] h-[480px] shadow-2xl border flex flex-col overflow-hidden transition-all duration-300 ${
+          className={`w-[calc(100vw-2rem)] sm:w-[380px] h-[480px] shadow-2xl border flex flex-col overflow-hidden transition-all duration-300 ${
             activeTheme === 'bold'
               ? 'bg-[#0a0a0a] border-white/10 rounded-none'
               : activeTheme === 'minimalist'

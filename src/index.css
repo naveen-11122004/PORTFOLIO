@@ -9,7 +9,9 @@
 }
 
 @layer base {
-  body {
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
     @apply font-sans;
   }
 }
@@ -79,14 +81,92 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Fluid responsive typography classes to prevent mobile overflows */
+/* Responsive typography classes to prevent mobile overflows and letter clipping */
 .responsive-hero-name {
-  font-size: clamp(0.85rem, 4.2vw, 2.75rem);
+  font-size: 2.75rem;
   white-space: nowrap;
 }
 
+@media (max-width: 1200px) {
+  .responsive-hero-name {
+    font-size: 2.25rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .responsive-hero-name {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .responsive-hero-name {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .responsive-hero-name {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-hero-name {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .responsive-hero-name {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .responsive-hero-name {
+    font-size: 0.75rem;
+  }
+}
+
 .responsive-section-title {
-  font-size: clamp(1.2rem, 5vw, 2.25rem);
-  line-height: 1.25;
+  font-size: 2.25rem;
+  line-height: 1.2;
+}
+
+@media (max-width: 1024px) {
+  .responsive-section-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .responsive-section-title {
+    font-size: 1.65rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .responsive-section-title {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-section-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .responsive-section-title {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .responsive-section-title {
+    font-size: 0.95rem;
+  }
 }
 

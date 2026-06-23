@@ -128,7 +128,9 @@ export default function Experiences({
                 <div className={`${cardStyle[activeTheme]} flex flex-col gap-3`}>
                   {/* Job Details */}
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                    <h4 className="text-base font-bold font-accent text-slate-950 dark:text-white leading-tight">
+                    <h4 className={`text-base font-bold font-accent leading-tight ${
+                      activeTheme === 'minimalist' ? 'text-slate-950' : 'text-white'
+                    }`}>
                       {work.role}
                     </h4>
                     <span className="flex items-center space-x-1 text-[11px] text-slate-500 font-mono shrink-0">
@@ -240,7 +242,9 @@ export default function Experiences({
                       <Trophy className="w-3.5 h-3.5 shrink-0" />
                     </div>
                     <div>
-                      <h5 className="text-xs font-bold text-slate-900 dark:text-white leading-tight">
+                      <h5 className={`text-xs font-bold leading-tight ${
+                        activeTheme === 'minimalist' ? 'text-slate-900' : 'text-white'
+                      }`}>
                         {prize.title}
                       </h5>
                       <p className="text-[10px] text-slate-400 mt-0.5">
@@ -286,7 +290,9 @@ export default function Experiences({
 
                 <div className={`${cardStyle[activeTheme]} flex flex-col gap-3`}>
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                    <h4 className="text-base font-bold font-accent text-slate-950 dark:text-white leading-tight">
+                    <h4 className={`text-base font-bold font-accent leading-tight ${
+                      activeTheme === 'minimalist' ? 'text-slate-950' : 'text-white'
+                    }`}>
                       {school.degree}
                     </h4>
                     <span className="flex items-center space-x-1 text-[11px] text-slate-500 font-mono shrink-0">
@@ -378,7 +384,9 @@ export default function Experiences({
                         />
                         <div>
                           <div className="flex justify-between items-start gap-1">
-                            <h5 className="text-xs font-bold text-slate-900 dark:text-white leading-tight">
+                            <h5 className={`text-xs font-bold leading-tight ${
+                              activeTheme === 'minimalist' ? 'text-slate-900' : 'text-white'
+                            }`}>
                               {cert.name}
                             </h5>
                           </div>
@@ -452,7 +460,9 @@ export default function Experiences({
                             <Trophy className="w-3.5 h-3.5 shrink-0" />
                           </div>
                           <div>
-                            <h5 className="text-xs font-bold text-slate-900 dark:text-white leading-tight">
+                            <h5 className={`text-xs font-bold leading-tight ${
+                              activeTheme === 'minimalist' ? 'text-slate-900' : 'text-white'
+                            }`}>
                               {ach.title}
                             </h5>
                             <p className="text-[10px] text-slate-400">
