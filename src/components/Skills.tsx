@@ -48,13 +48,13 @@ export default function Skills({ skills, activeTheme }: SkillsProps) {
   };
 
   const titleStyle = {
-    bold: 'text-4xl font-sans font-black text-center tracking-tighter uppercase text-[#F5F5F5]',
-    modern: 'text-3xl font-display font-bold text-center tracking-tight',
-    minimalist: 'text-3xl font-display font-light text-center tracking-tighter uppercase',
-    terminal: 'text-2xl font-mono font-bold text-left tracking-wide uppercase',
-    cyberpunk: 'text-3xl font-display font-extrabold text-center tracking-widest uppercase neon-glow',
-    nordic: 'text-3xl font-mono font-bold text-center tracking-tight text-[#e2e8f0]',
-    sunset: 'text-3xl font-display font-semibold text-center tracking-widest text-amber-100'
+    bold: 'text-xl sm:text-2xl md:text-3xl font-sans font-black text-center tracking-tighter uppercase text-[#F5F5F5]',
+    modern: 'text-xl sm:text-2xl md:text-3xl font-display font-bold text-center tracking-tight',
+    minimalist: 'text-xl sm:text-2xl md:text-3xl font-display font-light text-center tracking-tighter uppercase',
+    terminal: 'text-lg sm:text-xl md:text-2xl font-mono font-bold text-left tracking-wide uppercase',
+    cyberpunk: 'text-xl sm:text-2xl md:text-3xl font-display font-extrabold text-center tracking-wider sm:tracking-widest uppercase neon-glow',
+    nordic: 'text-xl sm:text-2xl md:text-3xl font-mono font-bold text-center tracking-tight text-[#e2e8f0]',
+    sunset: 'text-xl sm:text-2xl md:text-3xl font-display font-semibold text-center tracking-wider sm:tracking-widest text-amber-100'
   };
 
   const cardStyle = {

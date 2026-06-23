@@ -457,7 +457,7 @@ export default function App() {
         <AdminPanel onLogout={handleLogout} token={authToken} onViewPortfolio={() => setShowAdminPanel(false)} />
       ) : (
         // Main portfolio view (always visible)
-        <div id="root-portfolio-container" className={`${bgStyles[activeTheme]} transition-colors duration-300 font-sans pb-12`}>
+        <div id="root-portfolio-container" className={`${bgStyles[activeTheme]} transition-colors duration-300 font-sans pb-12 overflow-x-hidden w-full`}>
       
       {/* Header bar */}
       <header id="portfolio-header" className={`sticky top-0 z-30 transition-all ${navStyles[activeTheme]}`}>
