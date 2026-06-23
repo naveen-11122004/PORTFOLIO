@@ -173,7 +173,7 @@ export default function Login({ onLoginSuccess }: LoginProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+    <div className="w-full flex items-center justify-center">
       <div className="w-full max-w-[360px]">
         {/* Logo/Title */}
         <div className="text-center mb-8">
