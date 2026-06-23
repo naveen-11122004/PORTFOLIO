@@ -467,9 +467,6 @@ export default function App() {
 
   return (
     <>
-      {/* Dynamic Cursor Design */}
-      <CustomCursor activeTheme={activeTheme} />
-
       {/* Top Neon Scroll Progress bar */}
       <div 
         className={`fixed top-0 left-0 h-[3px] z-50 transition-all duration-75 pointer-events-none ${
@@ -723,6 +720,9 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* Dynamic Cursor Design (Placed at the bottom to ensure rendering on top of all modal siblings) */}
+      <CustomCursor activeTheme={activeTheme} />
 
         </div>
       )}

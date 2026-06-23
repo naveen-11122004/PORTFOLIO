@@ -172,7 +172,7 @@
 
 /* Hide browser default cursor when mouse pointer is active to render custom cursor */
 @media (pointer: fine) {
-  html, body, a, button, [role="button"], input, select, textarea, .cursor-pointer {
+  * {
     cursor: none !important;
   }
 }
