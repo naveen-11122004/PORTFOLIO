@@ -218,7 +218,7 @@ ${formData.name}`;
                         href={lastMailto}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-4 py-2 text-xs font-bold font-mono tracking-wider uppercase rounded-xl bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:opacity-90 text-white shadow-xl shadow-pink-500/15 cursor-pointer block text-center"
+                        className="px-4 py-2 text-xs font-bold font-mono tracking-wider uppercase rounded-xl bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:opacity-90 text-white shadow-xl shadow-pink-500/15 cursor-pointer block text-center neon-glow-btn"
                         title="Trigger Gmail compose window"
                       >
                         Open Email App
@@ -293,7 +293,7 @@ ${formData.name}`;
                       id="contact-submit-btn"
                       type="submit"
                       disabled={sending}
-                      className={`flex items-center space-x-2 px-6 py-2.5 text-xs font-bold font-mono tracking-wider uppercase transition-all ${
+                      className={`flex items-center space-x-2 px-6 py-2.5 text-xs font-bold font-mono tracking-wider uppercase transition-all neon-glow-btn ${
                         activeTheme === 'bold'
                           ? 'bg-[#ff4e00] text-black font-black hover:bg-[#ff4e00]/90 rounded-sm'
                           : activeTheme === 'minimalist'

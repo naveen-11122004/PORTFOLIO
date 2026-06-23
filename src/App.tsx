@@ -545,7 +545,7 @@ export default function App() {
             {!authToken && (
               <button
                 onClick={() => setShowAdminLogin(true)}
-                className={`p-2 rounded-lg transition flex items-center gap-2 cursor-pointer ${
+                className={`p-2 rounded-lg transition flex items-center gap-2 cursor-pointer neon-glow-btn ${
                   activeTheme === 'bold'
                     ? 'bg-[#ff4e00]/10 border border-[#ff4e00]/30 text-[#ff4e00] hover:bg-[#ff4e00]/20'
                     : activeTheme === 'minimalist'
@@ -572,7 +572,7 @@ export default function App() {
                 <button
                   onClick={handlePublishPortfolioData}
                   disabled={publishingData}
-                  className={`p-2 rounded-lg transition flex items-center gap-2 cursor-pointer ${
+                  className={`p-2 rounded-lg transition flex items-center gap-2 cursor-pointer neon-glow-btn ${
                     activeTheme === 'bold'
                       ? 'bg-green-600/10 border border-green-500/30 text-green-400 hover:bg-green-600/20'
                       : activeTheme === 'minimalist'
@@ -595,7 +595,7 @@ export default function App() {
                 
                 <button
                   onClick={() => setShowAdminPanel(true)}
-                  className={`p-2 rounded-lg transition flex items-center gap-2 cursor-pointer ${
+                  className={`p-2 rounded-lg transition flex items-center gap-2 cursor-pointer neon-glow-btn ${
                     activeTheme === 'bold'
                       ? 'bg-[#ff4e00]/10 border border-[#ff4e00]/30 text-[#ff4e00] hover:bg-[#ff4e00]/20'
                       : activeTheme === 'minimalist'
