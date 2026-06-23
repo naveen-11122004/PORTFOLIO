@@ -20,13 +20,13 @@ export default function Projects({ projects, activeTheme }: ProjectsProps) {
 
   // Theme configurations
   const containerStyle = {
-    bold: 'bg-[#050505] text-[#F5F5F5] py-16 px-4 border-b border-white/10',
-    modern: 'bg-slate-950 text-white py-16 px-4 border-b border-slate-800',
-    minimalist: 'bg-amber-50/30 text-slate-900 py-16 px-4 border-b border-amber-900/10',
-    terminal: 'bg-black text-green-500 py-16 px-4 font-mono border-b border-green-900/30',
-    cyberpunk: 'bg-slate-950 text-cyan-400 py-16 px-4 border-b border-pink-500/10',
-    nordic: 'bg-[#080f19] text-[#e2e8f0] py-16 px-4 border-b border-sky-950/40',
-    sunset: 'bg-[#140b09] text-amber-50 py-16 px-4 border-b border-[#e36940]/10'
+    bold: 'bg-[#050505] text-[#F5F5F5] py-10 px-6 md:px-12 border-b border-white/10',
+    modern: 'bg-slate-950 text-white py-10 px-6 md:px-12 border-b border-slate-800',
+    minimalist: 'bg-amber-50/30 text-slate-900 py-10 px-6 md:px-12 border-b border-amber-900/10',
+    terminal: 'bg-black text-green-500 py-10 px-6 md:px-12 font-mono border-b border-green-900/30',
+    cyberpunk: 'bg-slate-950 text-cyan-400 py-10 px-6 md:px-12 border-b border-pink-500/10',
+    nordic: 'bg-[#080f19] text-[#e2e8f0] py-10 px-6 md:px-12 border-b border-sky-950/40',
+    sunset: 'bg-[#140b09] text-amber-50 py-10 px-6 md:px-12 border-b border-[#e36940]/10'
   };
 
   const titleStyle = {
@@ -75,7 +75,7 @@ export default function Projects({ projects, activeTheme }: ProjectsProps) {
 
   return (
     <section id="projects-section" className={`w-full ${containerStyle[activeTheme]} transition-colors duration-300`}>
-      <div className="w-full max-w-5xl mx-auto space-y-8">
+      <div className="w-full max-w-[95%] mx-auto space-y-6">
         
         {/* Section Heading */}
         <div className="space-y-3">

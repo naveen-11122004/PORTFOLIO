@@ -9,7 +9,9 @@ import Contacts from './components/Contact';
 import ChatAgent from './components/ChatAgent';
 import ResumeParser from './components/ResumeParser';
 import ResumeViewerModal from './components/ResumeViewerModal';
-import { Sparkles, Bot, FileText, RefreshCw, Layers, ShieldCheck, Cpu, Upload } from 'lucide-react';
+import Login from './components/Login';
+import AdminPanel from './components/AdminPanel';
+import { Sparkles, Bot, FileText, RefreshCw, Layers, ShieldCheck, Cpu, Upload, Settings } from 'lucide-react';
 
 export default function App() {
   const [portfolioData, setPortfolioData] = useState<PortfolioData>(initialPortfolioData);
@@ -26,6 +28,39 @@ export default function App() {
     }
   });
 
+  // Authentication state
+  const [authToken, setAuthToken] = useState<string | null>(() => {
+    return localStorage.getItem('token');
+  });
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [publishingData, setPublishingData] = useState(false);
+
+  const handlePublishPortfolioData = async () => {
+    if (!authToken) return;
+    setPublishingData(true);
+    try {
+      const response = await fetch('/api/auth/portfolio-data', {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ portfolioData })
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert("Portfolio data published to the database successfully!");
+      } else {
+        alert("Failed to publish portfolio data: " + (data.error || "Unknown error"));
+      }
+    } catch (err: any) {
+      alert("Error publishing portfolio data: " + err.message);
+    } finally {
+      setPublishingData(false);
+    }
+  };
+
   const handleFileUploaded = (fileObj: UploadedResume) => {
     setUploadedResume(fileObj);
     localStorage.setItem('nk_uploaded_custom_resume', JSON.stringify(fileObj));
@@ -36,6 +71,20 @@ export default function App() {
   const handleClearUploadedResume = () => {
     setUploadedResume(null);
     localStorage.removeItem('nk_uploaded_custom_resume');
+  };
+
+  const handleLoginSuccess = (token: string) => {
+    setAuthToken(token);
+    localStorage.setItem('token', token);
+    setShowAdminLogin(false);
+    setShowAdminPanel(true);
+  };
+
+  const handleLogout = () => {
+    setAuthToken(null);
+    localStorage.removeItem('token');
+    setShowAdminPanel(false);
+    setShowAdminLogin(false);
   };
 
   // Load state and cache resume custom stats from LocalStorage
@@ -176,6 +225,86 @@ export default function App() {
       }
     }
   }, []);
+
+  // Fetch public user profile to sync name, bio, links, and avatar from database
+  useEffect(() => {
+    const fetchPublicProfile = async () => {
+      try {
+        const response = await fetch('/api/profile/public');
+        if (response.ok) {
+          const user = await response.json();
+          if (user) {
+            let dbCertsList: any[] = [];
+            try {
+              const certsResponse = await fetch(`/api/files/certifications/${user._id}`);
+              if (certsResponse.ok) {
+                dbCertsList = await certsResponse.json();
+              }
+            } catch (err) {
+              console.error("Failed to fetch certifications:", err);
+            }
+
+            setPortfolioData(prev => {
+              const baseData = user.portfolioData || prev;
+              const updated = {
+                ...baseData,
+                personalInfo: {
+                  ...baseData.personalInfo,
+                  name: user.name || baseData.personalInfo.name,
+                  bio: user.bio || baseData.personalInfo.bio,
+                  linkedin: user.linkedin || baseData.personalInfo.linkedin,
+                  github: user.github || baseData.personalInfo.github,
+                  avatar: user.profileImage ? `/api/files/profile-image/${user._id}?v=${user.profileImage}` : baseData.personalInfo.avatar
+                }
+              };
+              
+              // Ensure core identifiers and Salem, Tamilnadu, India are pristine
+              if (updated.personalInfo) {
+                updated.personalInfo.location = "Salem, Tamilnadu, India";
+                updated.personalInfo.name = "Navaneethakrishnan M K";
+                updated.personalInfo.email = "naveenkrishnamoorthi2004@gmail.com";
+                updated.personalInfo.phone = "7812850966";
+                updated.personalInfo.github = user.github || "https://github.com/naveen-11122004";
+                updated.personalInfo.linkedin = user.linkedin || "https://www.linkedin.com/in/navaneethakrishnan-krishnamoorthi-5a6094264";
+              }
+              
+              if (dbCertsList && dbCertsList.length > 0) {
+                updated.certifications = dbCertsList.map((c: any) => ({
+                  name: c.title,
+                  issuer: c.issuer,
+                  date: c.issueDate ? new Date(c.issueDate).getFullYear().toString() : "2025",
+                  imageUrl: c.certificateFile ? `/api/files/certification/${c._id}/file` : undefined
+                }));
+              }
+
+              // Sync to localStorage
+              localStorage.setItem('nk_portfolio_data', JSON.stringify(updated));
+              return updated;
+            });
+
+            // If the user has an uploaded resume in the database, set it in state
+            if (user.resume) {
+              const fileObj = {
+                name: user.resumeName || "Resume.pdf",
+                type: "application/pdf",
+                size: "Uploaded from Server",
+                dataUrl: `/api/files/download/${user.resume}`,
+                uploadedAt: new Date(user.updatedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+              };
+              setUploadedResume(fileObj);
+              localStorage.setItem('nk_uploaded_custom_resume', JSON.stringify(fileObj));
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch public profile:", err);
+      }
+    };
+    
+    if (!showAdminPanel) {
+      fetchPublicProfile();
+    }
+  }, [showAdminPanel]);
 
   // Callback when Gemini parsed a raw CV
   const handlePortfolioParsed = (newData: PortfolioData) => {
@@ -323,11 +452,16 @@ export default function App() {
   };
 
   return (
-    <div id="root-portfolio-container" className={`${bgStyles[activeTheme]} transition-colors duration-300 font-sans pb-12`}>
+    <>
+      {authToken && showAdminPanel ? (
+        <AdminPanel onLogout={handleLogout} token={authToken} onViewPortfolio={() => setShowAdminPanel(false)} />
+      ) : (
+        // Main portfolio view (always visible)
+        <div id="root-portfolio-container" className={`${bgStyles[activeTheme]} transition-colors duration-300 font-sans pb-12`}>
       
       {/* Header bar */}
       <header id="portfolio-header" className={`sticky top-0 z-30 transition-all ${navStyles[activeTheme]}`}>
-        <div className="max-w-6xl mx-auto px-4 py-4.5 flex flex-wrap gap-4 items-center justify-between">
+        <div className="max-w-[95%] w-full mx-auto px-6 py-3.5 flex flex-wrap gap-4 items-center justify-between">
           
           {/* Logo Node */}
           <div id="brand-logo" className="flex items-center space-x-2.5">
@@ -371,7 +505,82 @@ export default function App() {
 
           {/* Control block Grid */}
           <div id="header-control-cluster" className="flex items-center flex-wrap gap-2.5">
-            {/* Control elements simplified */}
+            {/* Admin Login button */}
+            {!authToken && (
+              <button
+                onClick={() => setShowAdminLogin(true)}
+                className={`p-2 rounded-lg transition flex items-center gap-2 cursor-pointer ${
+                  activeTheme === 'bold'
+                    ? 'bg-[#ff4e00]/10 border border-[#ff4e00]/30 text-[#ff4e00] hover:bg-[#ff4e00]/20'
+                    : activeTheme === 'minimalist'
+                      ? 'bg-slate-900 text-white hover:bg-slate-800'
+                      : activeTheme === 'terminal'
+                        ? 'bg-green-500/10 border border-green-500/30 text-green-500 hover:bg-green-500/20'
+                        : activeTheme === 'cyberpunk'
+                          ? 'bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500/20'
+                          : activeTheme === 'nordic'
+                            ? 'bg-sky-500/10 border border-sky-500/30 text-sky-400 hover:bg-sky-500/20'
+                            : activeTheme === 'sunset'
+                              ? 'bg-[#e36940]/10 border border-[#e36940]/30 text-[#e36940] hover:bg-[#e36940]/20'
+                              : 'bg-purple-600/10 border border-purple-500/20 text-purple-400 hover:bg-purple-600/20'
+                }`}
+                title="Admin Login"
+              >
+                <Settings size={18} />
+                <span className="text-xs font-semibold hidden sm:inline">Admin</span>
+              </button>
+            )}
+
+            {authToken && (
+              <>
+                <button
+                  onClick={handlePublishPortfolioData}
+                  disabled={publishingData}
+                  className={`p-2 rounded-lg transition flex items-center gap-2 cursor-pointer ${
+                    activeTheme === 'bold'
+                      ? 'bg-green-600/10 border border-green-500/30 text-green-400 hover:bg-green-600/20'
+                      : activeTheme === 'minimalist'
+                        ? 'bg-slate-900 text-white hover:bg-slate-800'
+                        : activeTheme === 'terminal'
+                          ? 'bg-green-500/10 border border-green-500/30 text-green-500 hover:bg-green-500/20'
+                          : activeTheme === 'cyberpunk'
+                            ? 'bg-green-500/10 border border-green-500/30 text-green-400 hover:bg-green-500/20'
+                            : activeTheme === 'nordic'
+                              ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
+                              : activeTheme === 'sunset'
+                                ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
+                                : 'bg-green-600/10 border border-green-500/20 text-green-400 hover:bg-green-600/20'
+                  }`}
+                  title="Publish Portfolio Data to Database"
+                >
+                  {publishingData ? <RefreshCw size={18} className="animate-spin" /> : <Upload size={18} />}
+                  <span className="text-xs font-semibold hidden sm:inline">Publish</span>
+                </button>
+                
+                <button
+                  onClick={() => setShowAdminPanel(true)}
+                  className={`p-2 rounded-lg transition flex items-center gap-2 cursor-pointer ${
+                    activeTheme === 'bold'
+                      ? 'bg-[#ff4e00]/10 border border-[#ff4e00]/30 text-[#ff4e00] hover:bg-[#ff4e00]/20'
+                      : activeTheme === 'minimalist'
+                        ? 'bg-slate-900 text-white hover:bg-slate-800'
+                        : activeTheme === 'terminal'
+                          ? 'bg-green-500/10 border border-green-500/30 text-green-500 hover:bg-green-500/20'
+                          : activeTheme === 'cyberpunk'
+                            ? 'bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500/20'
+                            : activeTheme === 'nordic'
+                              ? 'bg-sky-500/10 border border-sky-500/30 text-sky-400 hover:bg-sky-500/20'
+                              : activeTheme === 'sunset'
+                                ? 'bg-[#e36940]/10 border border-[#e36940]/30 text-[#e36940] hover:bg-[#e36940]/20'
+                                : 'bg-purple-600/10 border border-purple-500/20 text-purple-400 hover:bg-purple-600/20'
+                  }`}
+                  title="Go to Admin Panel"
+                >
+                  <Settings size={18} />
+                  <span className="text-xs font-semibold hidden sm:inline">Admin</span>
+                </button>
+              </>
+            )}
           </div>
 
         </div>
@@ -447,7 +656,7 @@ export default function App() {
       />
 
       {/* Visual Footer */}
-      <footer id="portfolio-footer" className={`max-w-6xl mx-auto border-t mt-16 pt-8 px-4 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 font-mono gap-4 leading-relaxed ${
+      <footer id="portfolio-footer" className={`max-w-[95%] w-full mx-auto border-t mt-10 pt-6 px-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 font-mono gap-4 leading-relaxed ${
         activeTheme === 'bold' 
           ? 'border-white/10 text-slate-400' 
           : activeTheme === 'nordic'
@@ -462,6 +671,25 @@ export default function App() {
 
       </footer>
 
-    </div>
+      {/* Admin Login Modal */}
+      {showAdminLogin && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="w-full max-w-md mx-4 relative">
+            <button
+              onClick={() => setShowAdminLogin(false)}
+              className="absolute -top-10 right-0 text-gray-300 hover:text-white text-2xl"
+            >
+              ✕
+            </button>
+            <div className="bg-slate-800 border border-purple-500/30 rounded-lg p-8">
+              <Login onLoginSuccess={handleLoginSuccess} />
+            </div>
+          </div>
+        </div>
+      )}
+
+        </div>
+      )}
+    </>
   );
 }

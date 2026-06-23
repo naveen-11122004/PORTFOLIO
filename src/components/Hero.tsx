@@ -197,7 +197,7 @@ export default function Hero({ personalInfo, onOpenParser, activeTheme, onUpdate
   return (
     <section 
       id="hero-section" 
-      className={`relative overflow-hidden w-full py-16 md:py-28 px-4 transition-all duration-300 min-h-[500px] flex items-center ${containerStyles[activeTheme]}`}
+      className={`relative overflow-hidden w-full py-10 md:py-16 px-6 md:px-12 transition-all duration-300 min-h-[450px] flex items-center ${containerStyles[activeTheme]}`}
     >
       {/* Absolute Canvas Background */}
       <canvas 
@@ -211,7 +211,7 @@ export default function Hero({ personalInfo, onOpenParser, activeTheme, onUpdate
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#ff4e00] rounded-full blur-[160px] opacity-15 pointer-events-none" />
       )}
 
-      <div className="relative w-full max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center z-10">
+      <div className="relative w-full max-w-[95%] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center z-10">
         
         {/* Left Column: Column 1 to Column 3 for Profile Image at the left corner */}
         <div id="hero-avatar-column" className="md:col-span-3 flex flex-col items-center md:items-start justify-center">
@@ -305,7 +305,7 @@ export default function Hero({ personalInfo, onOpenParser, activeTheme, onUpdate
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.35 }}
             id="hero-about-desc"
-            className={`text-sm sm:text-base leading-relaxed max-w-2xl ${
+            className={`text-sm sm:text-base leading-relaxed max-w-none ${
               activeTheme === 'minimalist' 
                 ? 'text-slate-600 font-serif' 
                 : activeTheme === 'terminal'
@@ -411,7 +411,9 @@ export default function Hero({ personalInfo, onOpenParser, activeTheme, onUpdate
             {personalInfo.email && (
               <a 
                 id="hero-email-link"
-                href={`mailto:${personalInfo.email}`} 
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(personalInfo.email)}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`hover:scale-110 transition-all duration-200 ${
                   activeTheme === 'bold' 
                     ? 'hover:text-[#ff4e00] text-white/60' 

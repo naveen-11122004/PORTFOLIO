@@ -32,33 +32,32 @@ ${formData.message}
 Best regards,
 ${formData.name}`;
 
-    const mailtoUrl = `mailto:${personalInfo.email}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-    setLastMailto(mailtoUrl);
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(personalInfo.email)}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+    setLastMailto(gmailUrl);
+
+    // Attempt direct client dispatch synchronously to avoid popup blocker
+    try {
+      window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+    } catch (err) {
+      console.warn("Gmail direct launching blocked or failed", err);
+    }
 
     setTimeout(() => {
       setSending(false);
       setIsSent(true);
-      
-      // Attempt direct client dispatch
-      try {
-        window.location.href = mailtoUrl;
-      } catch (err) {
-        console.warn("Mail client direct launching blocked or failed", err);
-      }
-
       setFormData({ name: '', email: '', subject: '', message: '' });
     }, 1000);
   };
 
   // Preset themes
   const containerStyle = {
-    bold: 'bg-[#050505] text-[#F5F5F5] py-16 px-4 border-b border-white/10',
-    modern: 'bg-slate-950 text-white py-16 px-4 border-b border-slate-900',
-    minimalist: 'bg-white text-slate-900 py-16 px-4 border-b border-amber-900/10',
-    terminal: 'bg-black text-green-500 py-16 px-4 font-mono',
-    cyberpunk: 'bg-slate-950 text-cyan-400 py-16 px-4 border-b border-pink-500/10',
-    nordic: 'bg-[#080f19] text-[#e2e8f0] py-16 px-4 border-b border-sky-950/40',
-    sunset: 'bg-[#140b09] text-amber-50 py-16 px-4 border-b border-[#e36940]/10'
+    bold: 'bg-[#050505] text-[#F5F5F5] py-10 px-6 md:px-12 border-b border-white/10',
+    modern: 'bg-slate-950 text-white py-10 px-6 md:px-12 border-b border-slate-900',
+    minimalist: 'bg-white text-slate-900 py-10 px-6 md:px-12 border-b border-amber-900/10',
+    terminal: 'bg-black text-green-500 py-10 px-6 md:px-12 font-mono',
+    cyberpunk: 'bg-slate-950 text-cyan-400 py-10 px-6 md:px-12 border-b border-pink-500/10',
+    nordic: 'bg-[#080f19] text-[#e2e8f0] py-10 px-6 md:px-12 border-b border-sky-950/40',
+    sunset: 'bg-[#140b09] text-amber-50 py-10 px-6 md:px-12 border-b border-[#e36940]/10'
   };
 
   const titleStyle = {
@@ -93,7 +92,7 @@ ${formData.name}`;
 
   return (
     <section id="contact-section" className={`w-full ${containerStyle[activeTheme]} transition-colors duration-300`}>
-      <div className="w-full max-w-5xl mx-auto space-y-12">
+      <div className="w-full max-w-[95%] mx-auto space-y-8">
         
         {/* Section Heading */}
         <div className="space-y-3">
@@ -139,7 +138,11 @@ ${formData.name}`;
                   </div>
                   <div>
                     <span className="text-[10px] uppercase font-mono tracking-wider opacity-60 block">Direct Email</span>
-                    <a href={`mailto:${personalInfo.email}`} className={`text-xs font-semibold hover:underline font-mono ${
+                    <a 
+                      href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(personalInfo.email)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`text-xs font-semibold hover:underline font-mono ${
                       activeTheme === 'bold' ? 'text-[#ff4e00]' : 'text-purple-400 dark:text-purple-400'
                     }`}>
                       {personalInfo.email}
@@ -213,8 +216,10 @@ ${formData.name}`;
                     {lastMailto && (
                       <a
                         href={lastMailto}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="px-4 py-2 text-xs font-bold font-mono tracking-wider uppercase rounded-xl bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:opacity-90 text-white shadow-xl shadow-pink-500/15 cursor-pointer block text-center"
-                        title="Trigger default mail app composer"
+                        title="Trigger Gmail compose window"
                       >
                         Open Email App
                       </a>
