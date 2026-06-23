@@ -330,7 +330,7 @@ export default function Hero({ personalInfo, onOpenParser, activeTheme, onUpdate
               <button
                 id="hero-view-resume-btn"
                 onClick={onViewResume}
-                className={`flex items-center space-x-2 px-5 py-2.5 rounded-xl text-xs font-bold font-mono uppercase tracking-wider border transition-all cursor-pointer ${
+                className={`flex items-center space-x-2 px-5 py-2.5 rounded-xl text-xs font-bold font-mono uppercase tracking-wider border transition-all cursor-pointer neon-glow-btn ${
                   activeTheme === 'bold'
                     ? 'border-white/20 text-[#F5F5F5] hover:bg-white/5 rounded-sm'
                     : activeTheme === 'minimalist'

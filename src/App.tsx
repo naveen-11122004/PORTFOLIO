@@ -11,6 +11,7 @@ import ResumeParser from './components/ResumeParser';
 import ResumeViewerModal from './components/ResumeViewerModal';
 import Login from './components/Login';
 import AdminPanel from './components/AdminPanel';
+import CustomCursor from './components/CustomCursor';
 import { Sparkles, Bot, FileText, RefreshCw, Layers, ShieldCheck, Cpu, Upload, Settings } from 'lucide-react';
 
 export default function App() {
@@ -18,6 +19,19 @@ export default function App() {
   const [activeTheme] = useState<ThemeStyle>('cyberpunk');
   const [isParserOpen, setIsParserOpen] = useState(false);
   const [isResumeViewerOpen, setIsResumeViewerOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Monitor scroll height to render top scroll progress bar
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        setScrollProgress((window.scrollY / totalHeight) * 100);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const [systemState, setSystemState] = useState<'Default template' | 'Parsed resume custom'>('Default template');
   const [uploadedResume, setUploadedResume] = useState<UploadedResume | null>(() => {
     try {
@@ -442,17 +456,39 @@ export default function App() {
   };
 
   const navStyles = {
-    bold: 'bg-[#050505]/95 border-b border-white/10 text-[#F5F5F5] backdrop-blur-md',
-    modern: 'bg-slate-900/80 border-b border-slate-800 text-white backdrop-blur-md',
-    minimalist: 'bg-white/80 border-b border-stone-200 text-slate-800 backdrop-blur-md',
-    terminal: 'bg-black border-b border-green-900/40 text-green-500',
-    cyberpunk: 'bg-slate-950/90 border-b border-pink-500/10 text-cyan-400',
-    nordic: 'bg-[#070e17]/95 border-b border-sky-950/40 text-[#e2e8f0] backdrop-blur-md',
-    sunset: 'bg-[#140b09]/95 border-b border-[#e36940]/10 text-amber-50 backdrop-blur-md'
+    bold: 'bg-[#050505]/80 border-b border-white/15 text-[#F5F5F5] backdrop-blur-xl shadow-lg',
+    modern: 'bg-slate-900/70 border-b border-slate-800/80 text-white backdrop-blur-xl shadow-lg',
+    minimalist: 'bg-white/70 border-b border-stone-200/80 text-slate-800 backdrop-blur-xl shadow-md',
+    terminal: 'bg-black/90 border-b border-green-950/30 text-green-500 backdrop-blur-md',
+    cyberpunk: 'bg-slate-950/70 border-b border-pink-500/25 text-cyan-400 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.5)]',
+    nordic: 'bg-[#070e17]/80 border-b border-sky-950/40 text-[#e2e8f0] backdrop-blur-xl shadow-lg',
+    sunset: 'bg-[#140b09]/80 border-b border-[#e36940]/25 text-amber-50 backdrop-blur-xl shadow-lg'
   };
 
   return (
     <>
+      {/* Dynamic Cursor Design */}
+      <CustomCursor activeTheme={activeTheme} />
+
+      {/* Top Neon Scroll Progress bar */}
+      <div 
+        className={`fixed top-0 left-0 h-[3px] z-50 transition-all duration-75 pointer-events-none ${
+          activeTheme === 'bold'
+            ? 'bg-gradient-to-r from-red-650 to-[#ff4e00]'
+            : activeTheme === 'cyberpunk'
+              ? 'bg-gradient-to-r from-pink-500 via-fuchsia-500 to-cyan-400'
+              : activeTheme === 'terminal'
+                ? 'bg-green-500'
+                : activeTheme === 'nordic'
+                  ? 'bg-gradient-to-r from-sky-500 to-blue-500'
+                  : activeTheme === 'sunset'
+                    ? 'bg-gradient-to-r from-orange-500 to-[#e36940]'
+                    : activeTheme === 'minimalist'
+                      ? 'bg-slate-900'
+                      : 'bg-gradient-to-r from-purple-500 to-pink-500'
+        }`}
+        style={{ width: `${scrollProgress}%` }}
+      />
       {authToken && showAdminPanel ? (
         <AdminPanel onLogout={handleLogout} token={authToken} onViewPortfolio={() => setShowAdminPanel(false)} />
       ) : (

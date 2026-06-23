@@ -170,3 +170,20 @@
   }
 }
 
+/* Hide browser default cursor when mouse pointer is active to render custom cursor */
+@media (pointer: fine) {
+  html, body, a, button, [role="button"], input, select, textarea, .cursor-pointer {
+    cursor: none !important;
+  }
+}
+
+/* Premium Neon Hover animations & styling utilities */
+.neon-glow-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.neon-glow-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 15px var(--glow-color, rgba(236, 72, 153, 0.45));
+}
+
