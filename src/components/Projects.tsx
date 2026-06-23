@@ -291,10 +291,9 @@ export default function Projects({ projects, activeTheme }: ProjectsProps) {
             </div>
 
             {/* Modal action bars */}
-            <div className={`flex justify-between items-center border-t pt-4 mt-2 ${
+            <div className={`flex justify-end items-center border-t pt-4 mt-2 ${
               activeTheme === 'bold' ? 'border-white/10' : 'border-slate-800/60'
             }`}>
-              <span className="text-xs font-mono text-slate-500">Node: Sandbox Active</span>
               <div className="flex items-center space-x-2">
                 {selectedProject.github && (
                   <a 
