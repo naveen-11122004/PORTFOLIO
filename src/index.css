@@ -78,3 +78,15 @@
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+/* Fluid responsive typography classes to prevent mobile overflows */
+.responsive-hero-name {
+  font-size: clamp(0.85rem, 4.2vw, 2.75rem);
+  white-space: nowrap;
+}
+
+.responsive-section-title {
+  font-size: clamp(1.2rem, 5vw, 2.25rem);
+  line-height: 1.25;
+}
+

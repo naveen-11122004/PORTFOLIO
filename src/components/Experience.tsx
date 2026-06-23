@@ -72,13 +72,13 @@ export default function Experiences({
   };
 
   const titleStyle = {
-    bold: 'text-xl sm:text-2xl md:text-3xl font-sans font-black tracking-tighter uppercase text-[#F5F5F5]',
-    modern: 'text-xl sm:text-2xl md:text-3xl font-display font-bold text-center tracking-tight',
-    minimalist: 'text-xl sm:text-2xl md:text-3xl font-display font-light text-center tracking-tighter uppercase',
-    terminal: 'text-lg sm:text-xl md:text-2xl font-mono font-bold text-left tracking-wide uppercase',
-    cyberpunk: 'text-xl sm:text-2xl md:text-3xl font-display font-extrabold text-center tracking-wider sm:tracking-widest uppercase neon-glow',
-    nordic: 'text-xl sm:text-2xl md:text-3xl font-mono font-bold text-center tracking-tight text-[#e2e8f0]',
-    sunset: 'text-xl sm:text-2xl md:text-3xl font-display font-semibold text-center tracking-wider sm:tracking-widest text-amber-100'
+    bold: 'font-sans font-black tracking-tighter uppercase text-[#F5F5F5] responsive-section-title',
+    modern: 'font-display font-bold text-center tracking-tight responsive-section-title',
+    minimalist: 'font-display font-light text-center tracking-tighter uppercase responsive-section-title',
+    terminal: 'font-mono font-bold text-left tracking-wide uppercase responsive-section-title',
+    cyberpunk: 'font-display font-extrabold text-center tracking-wider sm:tracking-widest uppercase neon-glow responsive-section-title',
+    nordic: 'font-mono font-bold text-center tracking-tight text-[#e2e8f0] responsive-section-title',
+    sunset: 'font-display font-semibold text-center tracking-wider sm:tracking-widest text-amber-100 responsive-section-title'
   };
 
   const cardStyle = {
