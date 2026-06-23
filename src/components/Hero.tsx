@@ -270,7 +270,7 @@ export default function Hero({ personalInfo, onOpenParser, activeTheme, onUpdate
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
               id="hero-name"
-              className={`font-bold leading-tight tracking-tight whitespace-nowrap text-sm sm:text-lg md:text-2xl lg:text-3xl xl:text-[2.75rem] max-w-full ${titleStyles[activeTheme]}`}
+              className={`font-bold leading-tight tracking-tight whitespace-nowrap text-[clamp(1.1rem,5.5vw,2.75rem)] max-w-full ${titleStyles[activeTheme]}`}
             >
               {personalInfo.name}
             </motion.h4>
