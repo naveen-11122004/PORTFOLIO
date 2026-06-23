@@ -95,37 +95,37 @@
 
 @media (max-width: 1024px) {
   .responsive-hero-name {
-    font-size: 2rem;
+    font-size: 1.85rem;
   }
 }
 
 @media (max-width: 768px) {
   .responsive-hero-name {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 }
 
 @media (max-width: 640px) {
   .responsive-hero-name {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
   }
 }
 
 @media (max-width: 480px) {
   .responsive-hero-name {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
   }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 400px) {
   .responsive-hero-name {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 340px) {
   .responsive-hero-name {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
   }
 }
 
