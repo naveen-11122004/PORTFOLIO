@@ -12,11 +12,20 @@ import ResumeViewerModal from './components/ResumeViewerModal';
 import Login from './components/Login';
 import AdminPanel from './components/AdminPanel';
 import CustomCursor from './components/CustomCursor';
+import ThemeSelector from './components/ThemeSelector';
 import { Sparkles, Bot, FileText, RefreshCw, Layers, ShieldCheck, Cpu, Upload, Settings } from 'lucide-react';
 
 export default function App() {
   const [portfolioData, setPortfolioData] = useState<PortfolioData>(initialPortfolioData);
-  const [activeTheme] = useState<ThemeStyle>('cyberpunk');
+  const [activeTheme, setActiveTheme] = useState<ThemeStyle>(() => {
+    return (localStorage.getItem('nk_active_theme') as ThemeStyle) || 'cyberpunk';
+  });
+
+  const handleThemeChange = (theme: ThemeStyle) => {
+    setActiveTheme(theme);
+    localStorage.setItem('nk_active_theme', theme);
+  };
+
   const [isParserOpen, setIsParserOpen] = useState(false);
   const [isResumeViewerOpen, setIsResumeViewerOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -538,6 +547,7 @@ export default function App() {
 
           {/* Control block Grid */}
           <div id="header-control-cluster" className="flex items-center flex-wrap gap-2.5">
+            <ThemeSelector currentTheme={activeTheme} onChangeTheme={handleThemeChange} />
             {/* Admin Login button */}
             {!authToken && (
               <button
@@ -675,6 +685,32 @@ export default function App() {
           onClose={() => setIsParserOpen(false)} 
           uploadedResume={uploadedResume}
           onClearUploadedResume={handleClearUploadedResume}
+          onPortfolioParsed={(parsedData) => {
+            // Update the portfolio data in state
+            setPortfolioData(parsedData);
+            
+            // Sync to localStorage
+            localStorage.setItem('nk_portfolio_data', JSON.stringify(parsedData));
+            setSystemState('Parsed resume custom');
+            
+            // Force location, name, email, phone to be clean
+            setPortfolioData(prev => {
+              const updated = {
+                ...prev,
+                personalInfo: {
+                  ...prev.personalInfo,
+                  location: "Salem, Tamilnadu, India",
+                  name: "Navaneethakrishnan M K",
+                  email: "naveenkrishnamoorthi2004@gmail.com",
+                  phone: "7812850966",
+                  github: prev.personalInfo.github || "https://github.com/naveen-11122004",
+                  linkedin: prev.personalInfo.linkedin || "https://www.linkedin.com/in/navaneethakrishnan-krishnamoorthi-5a6094264"
+                }
+              };
+              localStorage.setItem('nk_portfolio_data', JSON.stringify(updated));
+              return updated;
+            });
+          }}
         />
       )}
 

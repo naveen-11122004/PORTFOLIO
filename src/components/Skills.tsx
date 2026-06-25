@@ -166,7 +166,6 @@ export default function Skills({ skills, activeTheme }: SkillsProps) {
                     {skill.category}
                   </span>
                 </div>
-                <span className="text-xs font-mono opacity-80 font-bold">{skill.level}%</span>
               </div>
 
               {/* Title */}
@@ -175,25 +174,6 @@ export default function Skills({ skills, activeTheme }: SkillsProps) {
               }`}>
                 {skill.name}
               </h3>
-
-              {/* Slider meter frame */}
-              <div className="space-y-1 pt-1">
-                <div className={progressStyle[activeTheme]}>
-                  {/* Outer slider fill */}
-                  <div 
-                    id={`skill-fill-${index}`}
-                    className={fillStyle[activeTheme]} 
-                    style={{ width: `${skill.level}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Holographic grid lines for Terminal */}
-              {activeTheme === 'terminal' && (
-                <div className="absolute right-2 bottom-2 text-[10px] opacity-20 font-mono text-green-500 select-none">
-                  BIT_LVL::{skill.level}
-                </div>
-              )}
             </div>
           ))}
           

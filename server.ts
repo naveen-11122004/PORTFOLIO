@@ -323,7 +323,7 @@ async function startServer() {
         }
       }
 
-      const userObj = user.toObject();
+      const userObj = user.toObject() as any;
       userObj.resumeName = resumeName;
       res.json(userObj);
     } catch (error: any) {
@@ -348,7 +348,7 @@ async function startServer() {
         }
       }
 
-      const userObj = user.toObject();
+      const userObj = user.toObject() as any;
       userObj.resumeName = resumeName;
       res.json(userObj);
     } catch (error: any) {
@@ -673,7 +673,7 @@ async function startServer() {
   // ===== FILE MANAGEMENT ENDPOINTS =====
 
   // Upload profile image
-  app.post("/api/files/profile-image", upload.single("file"), async (req, res) => {
+  app.post("/api/files/profile-image", upload.single("file"), async (req: any, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ error: "No file uploaded" });
@@ -721,7 +721,7 @@ async function startServer() {
   });
 
   // Upload certification
-  app.post("/api/files/certification", upload.single("file"), async (req, res) => {
+  app.post("/api/files/certification", upload.single("file"), async (req: any, res) => {
     try {
       const { userId, title, issuer, issueDate, expiryDate, credentialId, credentialUrl } = req.body;
 
@@ -812,7 +812,7 @@ async function startServer() {
   });
 
   // Upload file (resume, portfolio, etc.)
-  app.post("/api/files/upload", upload.single("file"), async (req, res) => {
+  app.post("/api/files/upload", upload.single("file"), async (req: any, res) => {
     try {
       const { userId, fileType, description } = req.body;
 
