@@ -172,8 +172,32 @@
 
 /* Hide browser default cursor when mouse pointer is active to render custom cursor */
 @media (pointer: fine) {
-  * {
-    cursor: none !important;
+  /* Hide cursor globally on portfolio container and its children */
+  #root-portfolio-container,
+  #root-portfolio-container * {
+    cursor: none;
+  }
+
+  /* Restore standard text insertion cursor for text fields */
+  input,
+  textarea,
+  select,
+  [contenteditable] {
+    cursor: text !important;
+  }
+
+  /* Restore standard cursor inside modal overlays (Login, Resume Viewer, Resume Parser) */
+  .fixed.inset-0.z-50,
+  .fixed.inset-0.z-50 * {
+    cursor: auto !important;
+  }
+
+  /* Restore pointer cursor for links and buttons inside modal overlays */
+  .fixed.inset-0.z-50 a,
+  .fixed.inset-0.z-50 button,
+  .fixed.inset-0.z-50 [role="button"],
+  .fixed.inset-0.z-50 .cursor-pointer {
+    cursor: pointer !important;
   }
 }
 

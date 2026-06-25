@@ -34,11 +34,23 @@ export default function CustomCursor({ activeTheme }: CustomCursorProps) {
     mediaQuery.addEventListener('change', handleMediaQueryChange);
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Offset positions so elements are centered around pointer
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-      if (!isVisible && hasMouse) {
-        setIsVisible(true);
+      const target = e.target as HTMLElement | null;
+      const insideModalOrAdmin = target && (
+        target.closest('.fixed.inset-0.z-50') !== null ||
+        target.closest('.min-h-screen.bg-gradient-to-br') !== null ||
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.tagName === 'SELECT'
+      );
+
+      if (insideModalOrAdmin) {
+        setIsVisible(false);
+      } else {
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+        if (!isVisible && hasMouse) {
+          setIsVisible(true);
+        }
       }
     };
 
