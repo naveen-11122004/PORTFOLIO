@@ -12,19 +12,11 @@ import ResumeViewerModal from './components/ResumeViewerModal';
 import Login from './components/Login';
 import AdminPanel from './components/AdminPanel';
 import CustomCursor from './components/CustomCursor';
-import ThemeSelector from './components/ThemeSelector';
 import { Sparkles, Bot, FileText, RefreshCw, Layers, ShieldCheck, Cpu, Upload, Settings } from 'lucide-react';
 
 export default function App() {
   const [portfolioData, setPortfolioData] = useState<PortfolioData>(initialPortfolioData);
-  const [activeTheme, setActiveTheme] = useState<ThemeStyle>(() => {
-    return (localStorage.getItem('nk_active_theme') as ThemeStyle) || 'cyberpunk';
-  });
-
-  const handleThemeChange = (theme: ThemeStyle) => {
-    setActiveTheme(theme);
-    localStorage.setItem('nk_active_theme', theme);
-  };
+  const [activeTheme] = useState<ThemeStyle>('cyberpunk');
 
   const [isParserOpen, setIsParserOpen] = useState(false);
   const [isResumeViewerOpen, setIsResumeViewerOpen] = useState(false);
@@ -547,7 +539,6 @@ export default function App() {
 
           {/* Control block Grid */}
           <div id="header-control-cluster" className="flex items-center flex-wrap gap-2.5">
-            <ThemeSelector currentTheme={activeTheme} onChangeTheme={handleThemeChange} />
             {/* Admin Login button */}
             {!authToken && (
               <button

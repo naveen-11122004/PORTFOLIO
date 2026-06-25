@@ -350,29 +350,6 @@ export default function Hero({ personalInfo, onOpenParser, activeTheme, onUpdate
                 <span>View & Download Resume</span>
               </button>
             )}
-
-            <button
-              id="hero-ai-wizard-btn"
-              onClick={onOpenParser}
-              className={`flex items-center space-x-2 px-5 py-2.5 rounded-xl text-xs font-bold font-mono uppercase tracking-wider border transition-all cursor-pointer neon-glow-btn ${
-                activeTheme === 'bold'
-                  ? 'bg-white/5 border border-white/20 text-[#F5F5F5] hover:bg-white/10 rounded-sm'
-                  : activeTheme === 'minimalist'
-                    ? 'border border-slate-950 text-slate-950 hover:bg-slate-950 hover:text-white'
-                    : activeTheme === 'terminal'
-                      ? 'border border-green-500 text-green-500 bg-transparent hover:bg-green-500/10'
-                      : activeTheme === 'cyberpunk'
-                        ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border border-cyan-500/30 text-white hover:opacity-90 shadow-lg shadow-cyan-500/10'
-                        : activeTheme === 'nordic'
-                          ? 'border border-sky-400/40 text-sky-400 hover:bg-sky-500/10'
-                          : activeTheme === 'sunset'
-                            ? 'border border-amber-500/40 text-amber-400 hover:bg-[#e36940]/10'
-                            : 'bg-gradient-to-r from-indigo-600 to-purple-600 border border-indigo-500/30 text-white hover:opacity-90 shadow-lg'
-              }`}
-            >
-              <Sparkles className="w-4 h-4 text-current animate-pulse" />
-              <span>AI Resume Wizard</span>
-            </button>
           </motion.div>
 
           {/* Social Contact Connectors */}
